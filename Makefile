@@ -2,64 +2,41 @@ CFLAGS := -Wall -Werror -std=c++17
 CPPFLAGS := -MMD
 CXX := g++
 
-TARGET := bin/Database
+TARGET := bin/DataBase
 
-SOURCES := $(wildcard src/Database/main.cpp)
+SOURCES := $(wildcard src/DataBase/main.cpp)
 LIBSOURCES := $(wildcard src/lib/*.cpp)
-LIBMSOURCES := $(wildcard src/mlib/*.cpp)
 
 LIBOBJ := $(patsubst src/lib/%.cpp, obj/src/%.o, $(LIBSOURCES))
 LIB := obj/lib/functionLib.a
 
-MLIBOBJ := $(patsubst src/mlib/%.cpp, obj/src/%.o, $(LIBMSOURCES))
-MLIB := obj/mlib/methodsLib.a
-
-OBJ := $(patsubst src/Database/%.cpp, obj/src/%.o, $(SOURCES))
-
-TEST := $(wildcard test/*.cpp)
-TESTOBJ := $(patsubst test/%.cpp, obj/test/%.o, $(TEST))
-TESTTARGET := bin/TestDatabase
-CTEST := thirdparty/ctest.h
+OBJ := $(patsubst src/DataBase/%.cpp, obj/src/%.o, $(SOURCES))
 
 all:$(TARGET)
 
-$(TARGET): $(LIB) $(MLIB) $(OBJ)
-	$(CXX) $(CFLAGS) $(CPPFLAGS) -o $(TARGET) $(OBJ)  -L. $(MLIB) -L. $(LIB)  
+$(TARGET): $(LIB) $(OBJ)
+	$(CXX) $(CFLAGS) $(CPPFLAGS) -o $(TARGET) $(OBJ) -L. $(LIB)  
 
 $(LIB): $(LIBOBJ)
 	ar rcs $@ $^
 
-$(MLIB): $(MLIBOBJ)
-	ar rcs $@ $^
-
 obj/src/%.o: src/lib/%.cpp
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@  -I src/lib -I src/mlib
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@  -I src/lib 
 
-obj/src/%.o: src/mlib/%.cpp
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@ $ -I src/lib -I src/mlib
-
-obj/src/%.o: src/Database/%.cpp
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@  -Isrc/lib -I src/mlib  
-
-test: $(TESTTARGET)
-	./$(TESTTARGET)
-
-$(TESTTARGET): $(TESTOBJ) $(CTEST) $(LIB)
-	$(CXX) $(CPPFLAGS) $(CFLAGS) $(TESTOBJ) -o $@ -L. $(MLIB) -L. $(LIB)  -I src/lib -I src/mlib -I thirdparty
-
-obj/test/%.o: test/%.cpp $(CTEST)
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@ -L. $(MLIB) -L. $(LIB)  -Isrc/lib -I src/mlib -I thirdparty
+obj/src/%.o: src/DataBase/%.cpp
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@  -Isrc/lib  
 
 run: $(TARGET)
-	./bin/Database
+	./bin/DataBase
 
+rebuild: clean all
 
 clean:
 	find . -name "*.o" -exec rm '{}' \;
 	find . -name "*.d" -exec rm '{}' \;
 	find . -name "*.a" -exec rm '{}' \;
-	find ./bin -type f -name "Database" -exec rm -f '{}' \;
-	find ./bin -type f -name "TestDDatabase" -exec rm -f '{}' \;
+	find ./bin -type f -name "DataBase" -exec rm -f '{}' \;
+	find ./bin -type f -name "TestDataBase" -exec rm -f '{}' \;
 
 format:
 	cd src; find . -name "*.cpp" -exec clang-format -i {} \;
