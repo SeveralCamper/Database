@@ -5,4 +5,4 @@
 
 void SelectSort(int Array[], int ArrayLength);
 
-#endif
+#endif //  SELECT_SORT_H_

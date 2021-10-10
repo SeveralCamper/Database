@@ -19,4 +19,4 @@ int CheckSum (int Array[], int ArrayLength);
 
 int RunNumber (int Array[], int ArrayLength);
 
-#endif 
+#endif //  ARRAY_PROCESSING_METHODS_H_
