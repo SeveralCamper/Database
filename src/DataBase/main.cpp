@@ -1,11 +1,10 @@
 #include <iostream>
-#include "select_sort.h"
+#include "../lib/list_methods.h"
 
-int main ()
-{   	
-    int MassLength = 1000;
-    int Massive[MassLength];
-    FillRand(Massive,MassLength,50,500);
-    SelectSort(Massive,MassLength);
-    PrintMas(Massive,MassLength);
+int main()
+{
+    List lst;
+    int list_length = 0;
+    lst.list_tests(lst, list_length);
+    return 0;
 }

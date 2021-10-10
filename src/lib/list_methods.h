@@ -2,6 +2,9 @@
 #define LIST_METHODS_H_
 
 #include <iostream>
+#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 
 struct Node {
   int val;
@@ -17,6 +20,8 @@ struct List {
 
     bool is_empty();
 
+    void list_tests(List stl, int list_length);
+    void cases(List lst, int list_length);
     void push_back(int _val);
     void print();
     void remove_first();

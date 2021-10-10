@@ -35,11 +35,11 @@ clean:
 	find . -name "*.o" -exec rm '{}' \;
 	find . -name "*.d" -exec rm '{}' \;
 	find . -name "*.a" -exec rm '{}' \;
+	find . -name "*.out" -exec rm '{}' \;
 	find ./bin -type f -name "DataBase" -exec rm -f '{}' \;
-	find ./bin -type f -name "TestDataBase" -exec rm -f '{}' \;
 
 format:
 	cd src; find . -name "*.cpp" -exec clang-format -i {} \;
 	cd src; find . -name "*.h" -exec clang-format -i {} \;
 
-.PHONY: clean test run all format 
+.PHONY: clean run all format rebuild
