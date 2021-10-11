@@ -6,9 +6,8 @@
 #include <iostream>
 #include <iomanip>
 #include "list_methods.h"
-
-const int HASH_TABLE_SIZE = 5;
-const int INPUT_STRING_SIZE = 25;
+#define HASH_TABLE_SIZE 5
+#define INPUT_STRING_SIZE 25
 
 typedef struct hash {
     char data;

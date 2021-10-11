@@ -25,6 +25,10 @@ char input_string(char * input_string) {
     int string_el = 0;
     while (true) {
         scanf("%c", &input_string[string_el]);
+        if (string_el > 24) {
+            printf("Max string size is 25 symbols! Your line has been truncated to 25 characters\n");
+            break;
+        }
         if ((input_string[string_el] >= 'a' && input_string[string_el] <= 'z') ||
         (input_string[string_el] >= 'A' && input_string[string_el] <= 'Z') ||
         (input_string[string_el] == '\n') || ((input_string[string_el] >= '0' && input_string[string_el] <= '9'))) {
