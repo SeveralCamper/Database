@@ -87,6 +87,7 @@ Node* List::operator[] (const int index) {
 
 void List::list_tests(List lst, int list_length) {
     int randElAdd = 100;
+    char c;
     srand(randElAdd);
     std::cout << "Enter the initial number of items in the list or press ECS to exit" << std::endl;
     if ((scanf("%d%c", &list_length, &c) == 2) && (c == '\n')) {

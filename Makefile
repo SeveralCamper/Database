@@ -39,7 +39,7 @@ clean:
 	find ./bin -type f -name "DataBase" -exec rm -f '{}' \;
 
 format:
-	cd src; find . -name "*.cpp" -exec clang-format -i {} \;
-	cd src; find . -name "*.h" -exec clang-format -i {} \;
+	cd src/lib; find . -name "*.cpp" -exec clang-format -i {} \;
+	cd src/lib; find . -name "*.h" -exec clang-format -i {} \;
 
 .PHONY: clean run all format rebuild
