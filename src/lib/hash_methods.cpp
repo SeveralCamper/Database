@@ -1,64 +1,163 @@
 #include "hash_methods.h"
 
-int HashFunction(int num) {
-    return num % HASH_TABLE_SIZE;
+int hashFunction(char number) {
+    return number % HASH_TABLE_SIZE;
 }
 
-HASH * create_root(int element) {
-    HASH *lst;
-    lst = new(HASH);
-    lst->data = element;
-    lst->ptr = NULL;
-    return lst;
+void LinkedList::addNode(char val) {
+  Node *newnode = new Node();
+  newnode->data = val;
+  newnode->next = NULL;
+  if (head == NULL) {
+    head = newnode;
+  } else {
+    Node *temp = head;
+    while (temp->next != NULL) {
+      temp = temp->next;
+    }
+    temp->next = newnode;
+  }
 }
 
-HASH * add_element(hash *lst, int element) {
-    HASH *tmp;
-    tmp = new HASH;
-    lst->ptr = tmp;
-    tmp->data = element;
-    tmp->ptr = NULL;
-    return tmp;
+void LinkedList::print() {
+  if (head == NULL) {
+    return;
+  } else {
+    Node *temp = head;
+    while (temp) {
+      cout << temp->data << " -> ";
+      temp = temp->next;
+    }
+    cout << endl;
+  }
 }
 
-char input_string(char * input_string) {
-    int string_el = 0;
+bool pryamSvyazSearch(char x, LinkedList *table) {
+  Node *head = table[hashFunction(x)].head;
+  if (head == NULL) {
+    return false;
+  }
+  Node *temp = head;
+  while (temp) {
+    if (temp->data == x) {
+      return true;
+    }
+    temp = temp->next;
+  }
+  return false;
+}
+
+LinkedList *pryamSvyaz(string str) {
+  LinkedList *list = new LinkedList[HASH_TABLE_SIZE];
+  for (auto chr : str) {
+    unsigned int h = hashFunction(chr);
+    if (!pryamSvyazSearch(chr, list))
+      list[h].addNode(chr);
+  }
+  return list;
+}
+
+bool linearSearch(char x, char *a) {
+  auto h = hashFunction(x);
+  while (true) {
+    if (a[h] == x) {
+      return true;
+    }
+    if (a[h] == 0) {
+      return false;
+    };
+    h++;
+    if (h >= HASH_TABLE_SIZE) {
+      h -= HASH_TABLE_SIZE;
+    };
+  }
+}
+
+bool quadraSearch(char x, char *a) {
+  auto h = hashFunction(x);
+  int d = 1;
+  while (true) {
+    if (a[h] == x) {
+      return true;
+    }
+    if (a[h] == 0) {
+      return false;
+    };
+    h += d;
+    if (h >= HASH_TABLE_SIZE)
+      h -= HASH_TABLE_SIZE;
+    d += 2;
+  }
+}
+
+char *linear(string str) {
+  COL_COUNTER = 0;
+  char *a = new char[HASH_TABLE_SIZE];
+  for (int i = 0; i < HASH_TABLE_SIZE; i++) {
+    a[i] = 0;
+  }
+  for (auto x : str) {
+    bool counterFlag = false;
+    auto h = hashFunction(x);
+    int d = h;
+    bool COL_COUNTER_CHECK = true;
     while (true) {
-        scanf("%c", &input_string[string_el]);
-        if (string_el > 24) {
-            printf("Max string size is 25 symbols! Your line has been truncated to 25 characters\n");
-            break;
-        }
-        if ((input_string[string_el] >= 'a' && input_string[string_el] <= 'z') ||
-        (input_string[string_el] >= 'A' && input_string[string_el] <= 'Z') ||
-        (input_string[string_el] == '\n') || ((input_string[string_el] >= '0' && input_string[string_el] <= '9'))) {
-            if (input_string[string_el] == '\n') {
-                break;
-            } else {
-                string_el++;
-            }
-        } else {
-            printf("Unvalid input");
-            input_string = NULL;
-            break;
-        }
+      if (a[h] == x) {
+        break;
+      }
+      if (a[h] == 0) {
+        a[h] = x;
+        break;
+      };
+      if (d == h - 1 && counterFlag) {
+        cerr << "ПЕРЕПОЛНЕНИЕ";
+        return NULL;
+      };
+      if (COL_COUNTER_CHECK)
+        COL_COUNTER++;
+      COL_COUNTER_CHECK = false;
+      h++;
+      if (h >= HASH_TABLE_SIZE) {
+        h -= HASH_TABLE_SIZE;
+        counterFlag = true;
+      };
     }
-    return string_el;
+  }
+  return a;
 }
 
-void input_string_print(char * input_string, int string_length) {
-    for (int i = 0; i < string_length; i++) {
-        printf("%c", input_string[i]);
+char *quadra(string str) {
+  COL_COUNTER = 0;
+  char *a = new char[HASH_TABLE_SIZE];
+  for (int i = 0; i < HASH_TABLE_SIZE; i++) {
+    a[i] = 0;
+  }
+  for (auto x : str) {
+    auto h = hashFunction(x);
+    int d = 1;
+    bool COL_COUNTER_CHECK = true;
+    while (true) {
+      if (a[h] == x) {
+        break;
+      }
+      if (a[h] == 0) {
+        a[h] = x;
+        break;
+      };
+      if (d >= HASH_TABLE_SIZE) {
+        cerr << "ПЕРЕПОЛНЕНИЕ";
+        return NULL;
+      };
+
+      if (COL_COUNTER_CHECK)
+        COL_COUNTER++;
+      COL_COUNTER_CHECK = false;
+
+      h += d;
+      if (h >= HASH_TABLE_SIZE)
+        h -= HASH_TABLE_SIZE;
+      d += 2;
     }
-}
-
-void list_print(HASH *lst) {
-
-}
-
-int main() {
-    char * string = new char[INPUT_STRING_SIZE];
-    int string_length = input_string(string);
-    printf("%d\n", string_length);
-    input_string_print(string, string_length);
+  }
+  return a;
 }

@@ -5,19 +5,38 @@
 #include <stdlib.h>
 #include <iostream>
 #include <iomanip>
-#include "list_methods.h"
-#define HASH_TABLE_SIZE 5
+#define HASH_TABLE_SIZE 11
 #define INPUT_STRING_SIZE 25
 
-typedef struct hash {
-    char data;
-    struct hash *ptr;
-} HASH;
+int COL_COUNTER;
 
-HASH * create_root(int element);
-HASH * add_element(hash *lst, int element);
-void list_print(HASH *lst);
-int HashFunction(int num);
-int input_string(char * input_string, int *string_length);
+using namespace std;
+struct Node {
+  char data;
+  Node *next;
+};
+
+struct LinkedList {
+  LinkedList() { head = NULL; }
+  ~LinkedList(){};
+  void addNode(char val);
+  void print();
+
+  Node *head;
+};
+
+LinkedList * pryamSvyaz(string str);
+
+int hashFunction(char number);
+
+bool pryamSvyazSearch(char x, LinkedList *table);
+
+bool linearSearch(char x, char *a);
+
+bool quadraSearch(char x, char *a);
+
+char *linear(string str);
+
+char *quadra(string str);
 
 #endif //  HASH_METHODS_H_
