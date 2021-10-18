@@ -65,11 +65,11 @@ int main()
     root->right->right->left = new Vertex{counter++};
     root->right->right->right = new Vertex{counter++};
     std::cout << "                                   " << "From Bottom To Up" << std::endl;
-    std::cout << "|";
+    std::cout << "| ";
     print_from_bottom_to_up(root);
     std::cout << "\n";
     std::cout << "                                   " << "From Left To Right" << std::endl;
-    std::cout << "|";
+    std::cout << "| ";
     print_from_left_to_right(root);
     std::cout << std::endl;
     std::cout << "Size Of Tree = " << size(root) << std::endl;
@@ -77,6 +77,61 @@ int main()
     std::cout << "Average Height Of Tree = " << average_height(root) << std::endl;
     std::cout << "Control Sum = " << control_sum(root) << std::endl;
     delete_tree(root);
+
+    #ifdef SDP_M
+
+
+    std::cout << "Perfectly Balanced Search Tree" << std::endl;
+
+    int mas[100];
+    for (int i = 0; i < 100; i++) {
+        mas[i] = rand() % 5000;
+    }
+    std::sort(mas, mas + 100);
+
+    Vertex *rootISDP = ISDP(0, 99, mas);
+
+    std::cout << "\n\n\n\n";
+    std::cout << "                                   " << "From Bottom To Up" << std::endl;
+    std::cout << "| ";
+    print_from_bottom_to_up(rootISDP );
+    std::cout << "\n\n\n\n";
+    std::cout << "                                   " << "From Left To Right" << std::endl;
+    std::cout << "| ";
+    print_from_left_to_right(rootISDP );
+    std::cout << "\n\n\n\n";
+    std::cout << "                                   " << "From Up To Bottom" << std::endl;
+    std::cout << "| ";
+    print_from_up_to_bottom(rootISDP );
+
+    std::cout << "Size Of Tree = " << size(rootISDP ) << std::endl;
+    std::cout << "Height Of Tree = " << height(rootISDP ) << std::endl;
+    std::cout << "Average Height Of Tree = " << average_height(rootISDP ) << std::endl;
+    std::cout << "Control sum = " << control_sum(rootISDP ) << std::endl;
+
+    Vertex *rootSDP = nullptr;
+
+      for(int i = 0; i < 100; i++)
+      {
+        add_to_SDP(mas[i], rootSDP);
+      }
+
+    std::cout << "\n\n\n\n";
+    std::cout << "                                   " << "From Bottom To Up" << std::endl;
+    std::cout << "| ";
+    print_from_bottom_to_up(rootSDP);
+    std::cout << "\n\n\n\n";
+    std::cout << "                                   " << "From Left To Right" << std::endl;
+    std::cout << "| ";
+    print_from_left_to_right(rootSDP);
+    std::cout << "\n\n\n\n";
+
+    std::cout << "|       size  |   controlSum  |  height   |  averageHeight|\n";
+    std::cout << "|ISDP    " << size(rootISDP) << "       " << control_sum(rootISDP) << "           " << height(rootISDP) << "             " << average_height(rootISDP) << "|\n";
+    std::cout << "|SDP     " << size(rootSDP) << "       " << control_sum(rootSDP) << "           " << height(rootSDP) << "             " << average_height(rootSDP) << "|\n";
+    
+    #endif
+
     #endif
 
     return 0;
