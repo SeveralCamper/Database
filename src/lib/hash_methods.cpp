@@ -1,24 +1,32 @@
 #include "hash_methods.h"
 
 int Hash(int number) {
-  return number % m;
+  return number % hashList;
 }
 
-void print(int *a) {
-  cout << endl;
-  for (int i = 0; i < m; i++) {
-    cout << "|" << a[i] << "\t";
+void print(int *array) {
+  std::cout << std::endl;
+  for (int i = 0; i < hashList; i++) {
+    if (i + 1 == hashList) {
+      std::cout << "|" << array[i] << "|";
+    } else {
+      std::cout << "|" << array[i] << "|\t";
+    }
   }
-  cout << endl;
+  std::cout << std::endl;
 }
 
 void Fill(int *a, int *b, int *c, int n) {
-  cout << "Numbers: ";
+  std::cout << "Array Elements: ";
   for (int i = 0; i < n; i++) {
     a[i] = rand() % 99 + 1;
-    cout << a[i] << " ";
+    if (i + 1 == n) {
+      std::cout << a[i];
+    } else {
+      std::cout << a[i] << " ";
+    }
   }
-  for (int i = 0; i < m; i++) {
+  for (int i = 0; i < hashList; i++) {
     b[i] = 0; c[i] = 0;
   }
 }
@@ -33,10 +41,10 @@ int Square(int *a, int *b, int n) {
       if (b[j] == 0) { b[j] = a[i]; break;
     }
     else kol++;
-    if (d >= m)
+    if (d >= hashList)
     return kol;
     j += d;
-    if (j >= m) j -= m;
+    if (j >= hashList) j -= hashList;
     d += 2;
     }
   }
@@ -56,7 +64,7 @@ int Line(int *a, int *c, int n) {
     j++;
     if (z == j)
     return kol;
-    if (j >= m) j -= m;
+    if (j >= hashList) j -= hashList;
     kol++;
     }
   }
@@ -72,11 +80,11 @@ int Search(int *b, int key, int &kol) {
       
     }
     else kol++;
-    if (d >= m)
+    if (d >= hashList)
     return -1;
     j += d;
-    if (j >= m)
-    j -= m;
+    if (j >= hashList)
+    j -= hashList;
     d += 2;
   }
 }
@@ -89,3 +97,21 @@ int checkDigitsVal(int number) {
   }
   return DigitsVal;
 }
+
+void outPutTable(int hashList, int arrayLength, int lineCollisions, int squareCollisions) {
+  std::cout << "\n| Size H-table | Number Of Elements | Line Collisions | Square Collisions |\n";
+  std::cout << "|     " << hashList << "      |\t " << arrayLength
+  << "         |        " << lineCollisions
+  << "       |         "<< squareCollisions << "        |";
+}
+
+void printHashNum() {
+  for (int i = 0; i < hashList; i++) {
+    if (i + 1 == hashList) {
+        std::cout << "|" << i << "|";
+    } else {
+      std::cout << "|" << i << "|\t";
+    }
+  }
+}
+

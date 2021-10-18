@@ -1,12 +1,14 @@
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
 
-using namespace std;
-const int m = 13;
+const int hashList = 13;
 
 void print(int *a);
+void printHashNum();
 void Fill(int *a, int *b, int *c, int n);
+void outPutTable(int hashList, int arrayLength, int y, int x);
 
 int Hash(int number);
 int checkDigitsVal(int number);

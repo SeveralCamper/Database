@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip>
 #ifdef LIST_M
 #include "../lib/list_methods.h"
 #endif
@@ -21,37 +20,30 @@ int main()
 
     #ifdef HASH_M
     srand(time(nullptr));
-    int n, key, kol = 0;
-    cout << "Enter n: ";
-    cin >> n;
-    int a[n], b[m], c[m];
-    Fill(a, b, c, n);
-    int x = Square(a, b, n);
-    int y = Line(a, c, n);
-    cout << "\nSquare\n";
-    for (int i = 0; i < m; i++) {
-    cout << "|" << i << "\t";
-    }
-    print(b);
-    cout << "\nLine\n";
-    for (int i = 0; i < m; i++) {
-    cout << "|" << i << "\t";
-    }
+    int arrayLength, key, kolision = 0;
+    std::cout << "Enter array length: ";
+    std::cin >> arrayLength;
+    int array[arrayLength], squareArray[hashList], lineArray[hashList];
+    Fill(array, squareArray, lineArray, arrayLength);
+    int squareCollisions = Square(array, squareArray, arrayLength);
+    int lineCollisions = Line(array, lineArray, arrayLength);
+    std::cout << "\nSquare\n";
+    printHashNum();
+    print(squareArray);
+    std::cout << "\nLine\n";
+    printHashNum();
 
-    print(c);
-    cout << "\n| Size  H-table | number of elements | Line collisions | Square collisions |\n";
-    cout << "|" << std::setw(7) << m << std::setw(7) << "|"
-    << std::setw(9) << n << std::setw(9) << "|"
-    << std::setw(8) << y << std::setw(8) << "|"
-    << std::setw(9) << x << std::setw(9) << "|";
-    cout << "\nEnter key for search: ";
-    cin >> key;
-    if (Search(b, key, kol) == -1) {
-    cout << "Search: Not found; collisions = " << kol;
+    print(lineArray);
+    outPutTable(arrayLength,hashList, lineCollisions, squareCollisions);
+    
+    std::cout << "\nEnter key for search: ";
+    std::cin >> key;
+    std::cout << std::endl;
+    if (Search(squareArray, key, kolision) == -1) {
+    std::cout << "Search: Not found; collisions = " << kolision;
     } else {
-        cout << "Search: index = " << Search(b, key, kol) << "; collisions = " << kol; return 0;
+        std::cout << "Search: index = " << Search(lineArray, key, kolision) << "; collisions = " << kolision; return 0;
     }
-
     #endif
 
     #ifdef PBST_M
