@@ -16,29 +16,29 @@ void print(int *array) {
   std::cout << std::endl;
 }
 
-void Fill(int *a, int *b, int *c, int n) {
+void Fill(int *array, int *squareArray, int *lineArray, int arrayLength) {
   std::cout << "Array Elements: ";
-  for (int i = 0; i < n; i++) {
-    a[i] = rand() % 99 + 1;
-    if (i + 1 == n) {
-      std::cout << a[i];
+  for (int i = 0; i < arrayLength; i++) {
+    array[i] = rand() % 99 + 1;
+    if (i + 1 == arrayLength) {
+      std::cout << array[i];
     } else {
-      std::cout << a[i] << " ";
+      std::cout << array[i] << " ";
     }
   }
   for (int i = 0; i < hashList; i++) {
-    b[i] = 0; c[i] = 0;
+    squareArray[i] = 0; lineArray[i] = 0;
   }
 }
 
-int Square(int *a, int *b, int n) {
+int Square(int *array, int *squareArray, int arrayLength) {
   int kol = 0;
-  for (int i = 0; i < n; i++) {
-    int j = Hash(a[i]);
+  for (int i = 0; i < arrayLength; i++) {
+    int j = Hash(array[i]);
     int d = 1;
     while (true) {
-      if (b[j] == a[i]) break;
-      if (b[j] == 0) { b[j] = a[i]; break;
+      if (squareArray[j] == array[i]) break;
+      if (squareArray[j] == 0) { squareArray[j] = array[i]; break;
     }
     else kol++;
     if (d >= hashList)
@@ -51,15 +51,15 @@ int Square(int *a, int *b, int n) {
   return kol;
 }
 
-int Line(int *a, int *c, int n) {
+int Line(int *array, int *lineArray, int arrayLength) {
   int kol = 0;
-  for (int i = 0; i < n; i++) {
-    int j = Hash(a[i]);
+  for (int i = 0; i < arrayLength; i++) {
+    int j = Hash(array[i]);
     int z = j;
     while (true) {
-      if (c[j] == a[i]) break;
-      if (c[j] == 0) {
-      c[j] = a[i]; break;
+      if (lineArray[j] == array[i]) break;
+      if (lineArray[j] == 0) {
+      lineArray[j] = array[i]; break;
     }
     j++;
     if (z == j)
@@ -70,13 +70,13 @@ int Line(int *a, int *c, int n) {
   }
   return kol;
 }
-int Search(int *b, int key, int &kol) {
+int Search(int *squareArray, int key, int &kol) {
   int j = Hash(key);
   int d = 1;
   while (true) {
-    if (b[j] == key)
+    if (squareArray[j] == key)
     return j;
-    if (b[j] == 0) {
+    if (squareArray[j] == 0) {
       
     }
     else kol++;
@@ -99,7 +99,7 @@ int checkDigitsVal(int number) {
 }
 
 void outPutTable(int hashList, int arrayLength, int lineCollisions, int squareCollisions) {
-  std::cout << "\n| Size H-table | Number Of Elements | Line Collisions | Square Collisions |\n";
+  std::cout << "\arrayLength| Size H-table | Number Of Elements | Line Collisions | Square Collisions |\arrayLength";
   std::cout << "|     " << hashList << "      |\t " << arrayLength
   << "         |        " << lineCollisions
   << "       |         "<< squareCollisions << "        |";

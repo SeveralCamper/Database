@@ -5,13 +5,13 @@
 
 const int hashList = 13;
 
-void print(int *a);
+void print(int *array);
 void printHashNum();
-void Fill(int *a, int *b, int *c, int n);
-void outPutTable(int hashList, int arrayLength, int y, int x);
+void Fill(int *array, int *squareArray, int *lineArray, int arrayLength);
+void outPutTable(int hashList, int arrayLength, int lineCollisions, int squareCollisions);
 
 int Hash(int number);
 int checkDigitsVal(int number);
-int Line(int *a, int *c, int n);
-int Square(int *a, int *b, int n);
-int Search(int *b, int key, int &kol);
+int Line(int *array, int *lineArray, int arrayLength);
+int Square(int *array, int *squareArray, int arrayLength);
+int Search(int *squareArray, int key, int &kol);

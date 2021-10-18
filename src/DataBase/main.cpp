@@ -40,7 +40,7 @@ int main()
     std::cin >> key;
     std::cout << std::endl;
     if (Search(squareArray, key, kolision) == -1) {
-    std::cout << "Search: Not found; collisions = " << kolision;
+    std::cout << "Search: Not found" << std::endl;
     } else {
         std::cout << "Search: index = " << Search(lineArray, key, kolision) << "; collisions = " << kolision; return 0;
     }
