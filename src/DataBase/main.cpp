@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #ifdef LIST_M
 #include "../lib/list_methods.h"
 #endif
@@ -19,79 +20,38 @@ int main()
     #endif
 
     #ifdef HASH_M
-    cout << endl;
-
-    string myString = "johnclonnorfgsc";
-    cout << "String : " << myString << endl << endl;
-
-    LinkedList *svyazList = pryamSvyaz(myString);
-    for (int i = 0; i < HASH_TABLE_SIZE; i++) {
-        if (!svyazList[i].head)
-        cout << i << " " << endl;
-        else {
-        cout << i << " ";
-        svyazList[i].print();
-        }
+    srand(time(nullptr));
+    int n, key, kol = 0;
+    cout << "Enter n: ";
+    cin >> n;
+    int a[n], b[m], c[m];
+    Fill(a, b, c, n);
+    int x = Square(a, b, n);
+    int y = Line(a, c, n);
+    cout << "\nSquare\n";
+    for (int i = 0; i < m; i++) {
+    cout << "|" << i << "\t";
+    }
+    print(b);
+    cout << "\nLine\n";
+    for (int i = 0; i < m; i++) {
+    cout << "|" << i << "\t";
     }
 
-    cout << endl << endl;
-
-    cout << "linear" << endl;
-
-    char *list = linear(myString);
-    int COL1 = COL_COUNTER;
-    for (int i = 0; i < HASH_TABLE_SIZE; i++) {
-        cout << setw(3) << i;
-    }
-    cout << endl;
-    for (int i = 0; i < HASH_TABLE_SIZE; i++) {
-        if (list[i] == 0) {
-        cout << setw(3) << " ";
-        continue;
-        }
-        cout << setw(3) << (char)list[i];
-    }
-    cout << endl << endl << endl;
-
-    cout << "quadra" << endl;
-
-    list = quadra(myString);
-    int COL2 = COL_COUNTER;
-    for (int i = 0; i < HASH_TABLE_SIZE; i++) {
-        cout << setw(3) << i;
-    }
-    cout << endl;
-    for (int i = 0; i < HASH_TABLE_SIZE; i++) {
-        if (list[i] == 0) {
-        cout << setw(3) << " ";
-        continue;
-        }
-        cout << setw(3) << (char)list[i];
+    print(c);
+    cout << "\n| Size  H-table | number of elements | Line collisions | Square collisions |\n";
+    cout << "|" << std::setw(7) << m << std::setw(7) << "|"
+    << std::setw(9) << n << std::setw(9) << "|"
+    << std::setw(8) << y << std::setw(8) << "|"
+    << std::setw(9) << x << std::setw(9) << "|";
+    cout << "\nEnter key for search: ";
+    cin >> key;
+    if (Search(b, key, kol) == -1) {
+    cout << "Search: Not found; collisions = " << kol;
+    } else {
+        cout << "Search: index = " << Search(b, key, kol) << "; collisions = " << kol; return 0;
     }
 
-    cout << "\n\n\n";
-
-    cout << "Размер хеш-таблицы       Количество исходных символов      "
-            "Количество коллизий\n";
-    cout << "                                                         Лин.       "
-            "Квадр.    \n";
-    cout << "   " << HASH_TABLE_SIZE << "                                 " << myString.length()
-        << "                   " << COL1 << "          " << COL2 << endl
-        << endl
-        << endl;
-
-    char toBeFound = 'c';
-
-    cout << "Pryam Svyaz search of " << toBeFound << ": "
-        << pryamSvyazSearch(toBeFound, svyazList) << endl;
-
-    list = linear(myString);
-    cout << "Linear search of " << toBeFound << ": "
-        << linearSearch(toBeFound, list) << endl;
-
-    list = quadra(myString);
-    cout << "Quadra search of " << toBeFound << ": "
-        << quadraSearch(toBeFound, list) << endl;
     #endif
 
     #ifdef PBST_M
