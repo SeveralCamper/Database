@@ -126,9 +126,9 @@ int main()
     print_from_left_to_right(rootSDP);
     std::cout << "\n\n\n\n";
 
-    std::cout << "|       size  |   controlSum  |  height   |  averageHeight|\n";
-    std::cout << "|ISDP    " << size(rootISDP) << "       " << control_sum(rootISDP) << "           " << height(rootISDP) << "             " << average_height(rootISDP) << "|\n";
-    std::cout << "|SDP     " << size(rootSDP) << "       " << control_sum(rootSDP) << "           " << height(rootSDP) << "             " << average_height(rootSDP) << "|\n";
+    std::cout << "|     |   size  |   controlSum  |  height   |  averageHeight|\n";
+    std::cout << "|ISDP |   " << size(rootISDP) << "   |    " << control_sum(rootISDP) << "     |     " << height(rootISDP) << "     |       " << average_height(rootISDP) << "     |\n";
+    std::cout << "|SDP  |   " << size(rootSDP) << "   |    " << control_sum(rootSDP) << "     |     " << height(rootSDP) << "   |       " << average_height(rootSDP) << "    |\n";
     
     #endif
 
