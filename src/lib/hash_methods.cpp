@@ -99,8 +99,8 @@ int checkDigitsVal(int number) {
 }
 
 void outPutTable(int hashList, int arrayLength, int lineCollisions, int squareCollisions) {
-  std::cout << "\arrayLength| Size H-table | Number Of Elements | Line Collisions | Square Collisions |\arrayLength";
-  std::cout << "|     " << hashList << "      |\t " << arrayLength
+  std::cout << "| Size H-table | Number Of Elements | Line Collisions | Square Collisions | \n";
+  std::cout << "|     " << hashList << "      |         " << arrayLength
   << "         |        " << lineCollisions
   << "       |         "<< squareCollisions << "        |";
 }

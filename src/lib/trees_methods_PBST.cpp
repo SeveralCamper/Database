@@ -111,3 +111,28 @@ void add_to_SDP_rec(int D, Vertex *&p) {
         return;
     }
 }
+
+void quickSort(int *data, int *first, int *last) {
+    if (*first < *last) {
+        int left = *first, right = *last, middle = data[(left + right) / 2];
+        do {
+            while (data[left] < middle)
+                left++;
+            while (data[right] > middle)
+                right--;
+            if (left <= right) {
+                swap(data + left, data + right);
+                left++;
+                right--;
+            }
+        } while (left <= right);
+        quickSort(data, first, &right);
+        quickSort(data, &left, last);
+    }
+}
+
+void swap(int *first, int *second) {
+    int tmp = *first;
+    *first = *second;
+    *second = tmp;
+}

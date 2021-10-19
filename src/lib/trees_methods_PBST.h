@@ -18,12 +18,14 @@ int SDP(Vertex *p, int L);
 
 float average_height(Vertex *p);
 
+void swap(int *first, int *second);
 void print_from_left_to_right(Vertex *p);
 void print_from_bottom_to_up(Vertex *p);
 void print_from_up_to_bottom(Vertex *p);
 void delete_tree(Vertex* p);
 void add_to_SDP(int D, Vertex *&root);
 void add_to_SDP_rec(int D, Vertex *&p);
+void quickSort(int *data, int *first, int *last);
 
 Vertex *ISDP(int L, int R, int mas[]);
 
