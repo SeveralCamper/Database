@@ -85,11 +85,11 @@ int main()
 
     Vertex *rootSDP = nullptr;
 
-      for(int i = 0; i < 100; i++)
-      {
-        mas[i] = rand() % 100000;
-        add_to_SDP(mas[i], rootSDP);
-      }
+    for(int i = 0; i < 100; i++)
+    {
+      mas[i] = rand() % 100000;
+      add_to_SDP(mas[i], rootSDP);
+    }
 
     std::sort(mas, mas + 100);
 
@@ -132,6 +132,34 @@ int main()
     #endif
 
     #ifdef DELSDP_M
+
+    std::cout << "Random Search Tree" << std::endl;
+
+    int mas[10];
+
+    Vertex *rootSDP = nullptr;
+
+    for(int i = 0; i < 10; i++)
+    {
+      mas[i] = rand() % 100;
+      add_to_SDP(mas[i], rootSDP);
+    }
+
+    std::cout << "                                   " << "From Left To Right" << std::endl;
+    std::cout << "| ";
+    print_from_left_to_right(rootSDP);
+    std::cout << "\n\n\n\n";
+
+    for(int i  = 0; i < 3; i++){
+        int key;
+        std::cin >> key;
+        delete_from_SDP(key, rootSDP);
+    }
+
+    std::cout << "                                   " << "From Left To Right" << std::endl;
+    std::cout << "| ";
+    print_from_left_to_right(rootSDP);
+    std::cout << "\n\n\n\n";
   
     #endif
 }

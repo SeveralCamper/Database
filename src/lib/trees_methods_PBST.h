@@ -23,7 +23,7 @@ void add_to_SDP(int D, Vertex *&root);
 void add_to_SDP_rec(int D, Vertex *&p);
 void print_from_bottom_to_up(Vertex *p);
 void print_from_up_to_bottom(Vertex *p);
-void deleteFromSDP(int X, Vertex *&root);
+void delete_from_SDP(int X, Vertex *&root);
 void print_from_left_to_right(Vertex *p);
 
 Vertex *ISDP(int L, int R, int mas[]);

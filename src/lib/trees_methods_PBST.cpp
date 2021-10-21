@@ -113,7 +113,7 @@ void add_to_SDP_rec(int D, Vertex *&p) {
 }
 
 
-void deleteFromSDP(int key, Vertex *&root) {
+void delete_from_SDP(int key, Vertex *&root) {
     Vertex **p = &root;
     while(*p){
         if((*p)->data < key) p = &((*p)->right);
