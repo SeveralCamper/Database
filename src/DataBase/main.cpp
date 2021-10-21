@@ -8,6 +8,9 @@
 #ifdef PBST_M
 #include "../lib/trees_methods_PBST.h"
 #endif
+#ifdef SDP_M
+#include "../lib/trees_methods_PBST.h"
+#endif
 
 int main()
 {
@@ -47,23 +50,16 @@ int main()
     #endif
 
     #ifdef PBST_M
-    /*int counter = 1;
+    int counter = 1;
     std::cout << "Perfectly Balanced Search Tree" << std::endl;
-    Vertex *root = new Vertex{counter++};
-    root->left = new Vertex{counter++};
-    root->right = new Vertex{counter++};
-    root->left->left = new Vertex{counter++};
-    root->left->right = new Vertex{counter++};
-    root->right->left = new Vertex{counter++};
-    root->right->right = new Vertex{counter++};
-    root->left->left->left = new Vertex{counter++};
-    root->left->left->right = new Vertex{counter++};
-    root->left->right->left = new Vertex{counter++};
-    root->left->right->right = new Vertex{counter++};
-    root->right->left->left = new Vertex{counter++};
-    root->right->left->right = new Vertex{counter++};
-    root->right->right->left = new Vertex{counter++};
-    root->right->right->right = new Vertex{counter++};
+    int arr[100];
+    for (int i = 0; i < 100; i++) {
+        arr[i] = rand() % 5000;
+    }
+    std::sort(arr, arr + 100);
+
+    Vertex *root = ISDP(0, 99, arr);
+
     std::cout << "                                   " << "From Bottom To Up" << std::endl;
     std::cout << "| ";
     print_from_bottom_to_up(root);
@@ -76,25 +72,22 @@ int main()
     std::cout << "Height Of Tree = " << height(root) << std::endl;
     std::cout << "Average Height Of Tree = " << average_height(root) << std::endl;
     std::cout << "Control Sum = " << control_sum(root) << std::endl;
-    delete_tree(root);*/
+    delete_tree(root);
+
+    #endif
 
     #ifdef SDP_M
+    std::cout << "Random Search Tree" << std::endl;
 
     int mas[100];
-
-    Vertex *rootSDP = nullptr;
-
-      for(int i = 0; i < 100; i++)
-      {
-        mas[i] = rand() % 100000;
-        add_to_SDP(mas[i], rootSDP);
-      }
-
+    for (int i = 0; i < 100; i++) {
+        mas[i] = rand() % 5000;
+    }
     std::sort(mas, mas + 100);
 
     Vertex *rootISDP = ISDP(0, 99, mas);
 
-    std::cout << "Perfectly Balanced Search Tree" << std::endl;
+    std::cout << "\n\n\n\n";
     std::cout << "                                   " << "From Bottom To Up" << std::endl;
     std::cout << "| ";
     print_from_bottom_to_up(rootISDP );
@@ -106,15 +99,20 @@ int main()
     std::cout << "                                   " << "From Up To Bottom" << std::endl;
     std::cout << "| ";
     print_from_up_to_bottom(rootISDP );
-    std::cout << "\n";
 
     std::cout << "Size Of Tree = " << size(rootISDP ) << std::endl;
     std::cout << "Height Of Tree = " << height(rootISDP ) << std::endl;
     std::cout << "Average Height Of Tree = " << average_height(rootISDP ) << std::endl;
     std::cout << "Control sum = " << control_sum(rootISDP ) << std::endl;
 
+    Vertex *rootSDP = nullptr;
+
+      for(int i = 0; i < 100; i++)
+      {
+        add_to_SDP(mas[i], rootSDP);
+      }
+
     std::cout << "\n\n\n\n";
-    std::cout << "Random Search Tree" << std::endl;
     std::cout << "                                   " << "From Bottom To Up" << std::endl;
     std::cout << "| ";
     print_from_bottom_to_up(rootSDP);
@@ -125,12 +123,10 @@ int main()
     std::cout << "\n\n\n\n";
 
     std::cout << "|     |   size  |   controlSum  |  height   |  averageHeight|\n";
-    std::cout << "|ISDP |   " << size(rootISDP) << "   |    " << control_sum(rootISDP) << "     |    " << height(rootISDP) << "     |       " << average_height(rootISDP) << "     |\n";
-    std::cout << "|SDP  |   " << size(rootSDP) << "   |    " << control_sum(rootSDP) << "     |    " << height(rootSDP) << "    |       " << average_height(rootSDP) << "    |\n";
+    std::cout << "|ISDP |   " << size(rootISDP) << "   |    " << control_sum(rootISDP) << "     |     " << height(rootISDP) << "     |       " << average_height(rootISDP) << "     |\n";
+    std::cout << "|SDP  |   " << size(rootSDP) << "   |    " << control_sum(rootSDP) << "     |     " << height(rootSDP) << "   |       " << average_height(rootSDP) << "    |\n";
     
-    #endif
-
-    #endif
-
     return 0;
+
+    #endif
 }

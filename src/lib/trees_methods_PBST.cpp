@@ -112,27 +112,30 @@ void add_to_SDP_rec(int D, Vertex *&p) {
     }
 }
 
-void quickSort(int *data, int *first, int *last) {
-    if (*first < *last) {
-        int left = *first, right = *last, middle = data[(left + right) / 2];
-        do {
-            while (data[left] < middle)
-                left++;
-            while (data[right] > middle)
-                right--;
-            if (left <= right) {
-                swap(data + left, data + right);
-                left++;
-                right--;
-            }
-        } while (left <= right);
-        quickSort(data, first, &right);
-        quickSort(data, &left, last);
-    }
-}
 
-void swap(int *first, int *second) {
-    int tmp = *first;
-    *first = *second;
-    *second = tmp;
+void deleteFromSDP(int key, Vertex *&root) {
+    Vertex **p = &root;
+    while(*p){
+        if((*p)->data < key) p = &((*p)->right);
+        else if ((*p)->data > key) p = &((*p)->left);
+        else break;
+    }
+    if(*p){
+        Vertex *q = *p;
+        if(!q->left) *p = q->right;
+        else if (!q->right) *p=q->left;
+        else {
+            Vertex *r = q->left;
+            Vertex *s = q;
+            while(r->right){
+                s = r;
+                r = r->right;
+            }
+            s->right = r->left;
+            r->left = q->left;
+            r->right = q->right;
+            *p = r;
+        }
+        delete q;
+    }
 }
