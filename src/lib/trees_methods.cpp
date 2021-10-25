@@ -1,4 +1,6 @@
-#include "trees_methods_PBST.h"
+#include "trees_methods.h"
+
+bool growth;
 
 int size(Vertex *p) {
   if (!p)
@@ -138,4 +140,111 @@ void delete_from_SDP(int key, Vertex *&root) {
         }
         delete q;
     }
+}
+
+void LL(Vertex *&p) {
+  Vertex *q = p->left;
+  p->balance = q->balance = 0;
+  p->left = q->right;
+  q->right = p;
+  p = q;
+}
+
+void RR(Vertex *&p) {
+  Vertex *q = p->right;
+  p->balance = q->balance = 0;
+  p->right = q->left;
+  q->left = p;
+  p = q;
+}
+
+void LR(Vertex *&p) {
+  Vertex *q = p->left;
+  Vertex *r = q->right;
+  if (r->balance < 0) {
+    p->balance = 1;
+  } else {
+    p->balance = 0;
+  }
+  if (r->balance > 0) {
+    q->balance = -1;
+  } else {
+    q->balance = 0;
+  }
+  r->balance = 0;
+  q->right = r->left;
+  p->left = r->right;
+  r->left = q;
+  r->right = p;
+  p = r;
+}
+
+void RL(Vertex *&p) {
+  Vertex *q = p->right;
+  Vertex *r = q->left;
+  if (r->balance > 0) {
+    p->balance = -1;
+  } else {
+    p->balance = 0;
+  }
+  if (r->balance < 0) {
+    q->balance = 1;
+  } else {
+    q->balance = 0;
+  }
+  r->balance = 0;
+  q->left = r->right;
+  p->right = r->left;
+  r->right = q;
+  r->left = p;
+  p = r;
+}
+
+void AVL(Vertex *&p, int D) {
+  if (!p) {
+    p = new Vertex;
+    p->data = D;
+    p->left = nullptr;
+    p->right = nullptr;
+    p->balance = 0;
+    growth = true;
+  } else if (p->data > D) {
+    AVL(p->left, D);
+    if (growth) {
+      if (p->balance > 0) {
+        p->balance = 0;
+        growth = false;
+      } else if (p->balance == 0) {
+        p->balance = -1;
+        growth = true;
+      } else {
+        if (p->left->balance < 0) {
+          LL(p);
+          growth = false;
+        } else {
+          LR(p);
+          growth = false;
+        }
+      }
+    }
+  } else if (p->data < D) {
+    AVL(p->right, D);
+    if (growth) {
+      if (p->balance < 0) {
+        p->balance = 0;
+        growth = false;
+      } else if (p->balance == 0) {
+        p->balance = 1;
+        growth = true;
+      } else {
+        if (p->right->balance > 0) {
+          RR(p);
+          growth = false;
+        } else {
+          RL(p);
+          growth = false;
+        }
+      }
+    }
+  }
 }

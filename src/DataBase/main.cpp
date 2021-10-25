@@ -6,13 +6,17 @@
 #include "../lib/hash_methods.h"
 #endif
 #ifdef PBST_M
-#include "../lib/trees_methods_PBST.h"
+#include "../lib/trees_methods.h"
 #endif
 #ifdef SDP_M
-#include "../lib/trees_methods_PBST.h"
+#include "../lib/trees_methods.h"
 #endif
 #ifdef DELSDP_M
-#include "../lib/trees_methods_PBST.h"
+#include "../lib/trees_methods.h"
+#endif
+
+#ifdef AVL_M
+#include "../lib/trees_methods.h"
 #endif
 
 int main()
@@ -161,5 +165,27 @@ int main()
     print_from_left_to_right(rootSDP);
     std::cout << "\n\n\n\n";
   
+    #endif
+
+    #ifdef AVL_M
+
+    srand(time(NULL));
+    Vertex *rootAVL = nullptr;
+    Vertex *rootSDP = nullptr;
+    int mas[100];
+
+    for (int i = 0; i < 100; i++) {
+      mas[i] = rand() % 1000000;
+    }
+    
+    for (int i = 0; i < 100; i++) {
+      AVL(rootAVL, mas[i]);
+      add_to_SDP(mas[i], rootSDP);
+    }
+
+    std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
+    std::cout << "|AVL  |   " << size(rootAVL) << "   |    " << control_sum(rootAVL) << "   |     " << height(rootAVL) << "     |       " << average_height(rootAVL) << "    |\n";
+    std::cout << "|SDP  |   " << size(rootSDP) << "   |    " << control_sum(rootSDP) << "   |     " << height(rootSDP) << "    |       " << average_height(rootSDP) << "    |\n";
+
     #endif
 }

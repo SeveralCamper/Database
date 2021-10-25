@@ -7,6 +7,7 @@
 
 struct Vertex {
   int data;
+  int balance = 0;
   Vertex *left = nullptr;
   Vertex *right = nullptr;
 };
@@ -25,6 +26,12 @@ void print_from_bottom_to_up(Vertex *p);
 void print_from_up_to_bottom(Vertex *p);
 void delete_from_SDP(int X, Vertex *&root);
 void print_from_left_to_right(Vertex *p);
+
+void AVL(Vertex *&p, int D);
+void RL(Vertex *&p);
+void LR(Vertex *&p);
+void RR(Vertex *&p);
+void LL(Vertex *&p);
 
 Vertex *ISDP(int L, int R, int mas[]);
 
