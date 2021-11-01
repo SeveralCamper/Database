@@ -1,6 +1,7 @@
 #include "trees_methods.h"
 
 bool growth;
+bool decreasing = false;
 
 int size(Vertex *p) {
   if (!p)
@@ -114,6 +115,19 @@ void add_to_SDP_rec(int D, Vertex *&p) {
     }
 }
 
+void del(Vertex*& ql, Vertex*& q) {
+	if (ql->right != nullptr) {
+		del(ql->right, q);
+		if (decreasing)
+			BR(ql);
+	}
+	else {
+		//q->data = ql->data;
+		q = ql;
+		ql = ql->left;
+		decreasing = true;
+	}
+}
 
 void delete_from_SDP(int key, Vertex *&root) {
     Vertex **p = &root;
@@ -247,4 +261,103 @@ void AVL(Vertex *&p, int D) {
       }
     }
   }
+}
+
+void LL1(Vertex *& p) {
+	Vertex* q = p->left;
+	if (q->balance == 0) {
+		q->balance = 1;
+		p->balance = -1;
+		decreasing = false;
+	}
+	else {
+		q->balance = 0;
+		p->balance = 0;
+	}
+	p->left = q->right;
+	q->right = p;
+	p = q;
+}
+
+void RR1(Vertex *& p) {
+	Vertex* q = p->right;
+	if (q->balance == 0) {
+		q->balance = -1;
+		p->balance = 1;
+		decreasing = false;
+	}
+	else {
+		q->balance = 0;
+		p->balance = 0;
+	}
+	p->right = q->left;
+	q->left = p;
+	p = q;
+}
+
+void BL(Vertex *& p) { 
+	if (p->balance == -1) {
+		p->balance = 0;
+	}
+	else if (p->balance == 0) {
+		p->balance = 1;
+		decreasing = false;
+	}
+	else if (p->balance == 1) {
+		if (p->right->balance >= 0) {
+			RR1(p);
+		}
+		else {
+			RL(p);
+		}
+	}
+}
+
+void BR(Vertex *& p) { 
+	if (p->balance == 1) {
+		p->balance = 0;
+	}
+	else if (p->balance == 0) {
+		p->balance = -1;
+		decreasing = false;
+	}
+	else if (p->balance == -1) {
+		if (p->left->balance <= 0) {
+			LL1(p);
+		}
+		else {
+			LR(p);
+		}
+	}
+}
+
+void delete_from_AVL(Vertex*& p, int key) {
+	if (p == nullptr);
+	else if (p->data > key) {
+		delete_from_AVL(p->left, key);
+		if (decreasing)
+			BL(p);
+	}
+	else if (p->data < key) {
+		delete_from_AVL(p->right, key);
+		if (decreasing)
+			BR(p);
+	}
+	else {
+		Vertex* q = p;
+		if (q->right == nullptr) {
+			p = q->left;
+			decreasing = true;
+		}
+		else if (q->left == nullptr) {
+			p = q->right;
+			decreasing = true;
+		}
+		else {
+			del(q->left, q);
+			if (decreasing) 
+				BL(p);
+		}
+		delete q;
+	}
 }

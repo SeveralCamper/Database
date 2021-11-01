@@ -33,6 +33,13 @@ void LR(Vertex *&p);
 void RR(Vertex *&p);
 void LL(Vertex *&p);
 
+void BL (Vertex *&p);
+void BR (Vertex *&p);
+void LL_1 (Vertex *&p);
+void RR_1 (Vertex *&p);
+void del(Vertex*& ql, Vertex*& q);
+void delete_from_AVL(Vertex*& p, int key);
+
 Vertex *ISDP(int L, int R, int mas[]);
 
 #endif //  TREES_METHODS_PBST_H_
