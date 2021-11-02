@@ -5,21 +5,7 @@
 #ifdef HASH_M
 #include "../lib/hash_methods.h"
 #endif
-#ifdef PBST_M
 #include "../lib/trees_methods.h"
-#endif
-#ifdef SDP_M
-#include "../lib/trees_methods.h"
-#endif
-#ifdef DELSDP_M
-#include "../lib/trees_methods.h"
-#endif
-#ifdef AVL_M
-#include "../lib/trees_methods.h"
-#endif
-#ifdef AVL_DEL_M
-#include "../lib/trees_methods.h"
-#endif
 
 int main() {
   #ifdef LIST_M
@@ -204,5 +190,24 @@ int main() {
     std::cout << "|";
     print_from_left_to_right(rootAVL);
     }
+    #endif
+
+    #ifdef B2_INSERT_M
+
+  srand(time(NULL));
+  Vertex *rootAVL = nullptr;
+  Vertex *rootBDB = nullptr;
+  for (int i = 0; i < 100; i++) {
+    int value = rand() % 1000000;
+    AVL(rootAVL, value);
+    B2_insert(value, rootBDB);
+  }
+  std::cout << "|";
+  print_from_left_to_right(rootBDB);
+  std::cout << "\n\n\n\n\n\n\n";
+std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
+  std::cout << "|AVL  |   " << size(rootAVL) << "   |    " << control_sum(rootAVL) << "   |     " << height(rootAVL) << "     |       " << average_height(rootAVL) << "    |\n";
+  std::cout << "|DBD  |   " << size(rootBDB) << "   |    " << control_sum(rootBDB) << "   |     " << height(rootBDB) << "     |       " << average_height(rootBDB) << "    |\n";
+
     #endif
 }

@@ -3,6 +3,8 @@
 bool growth;
 bool decreasing = false;
 
+int VR, HR;
+
 int size(Vertex *p) {
   if (!p)
     return 0;
@@ -360,4 +362,51 @@ void delete_from_AVL(Vertex*& p, int key) {
 		}
 		delete q;
 	}
+}
+
+void B2_insert(int D, Vertex *&p) {
+  if (!p) {
+    p = new Vertex;
+    p->data = D;
+    p->left = p->right = NULL;
+    p->balance = 0;
+    VR = 1;
+  } else if (p->data > D) {
+    B2_insert(D, p->left);
+    if (VR == 1) {
+      if (p->balance == 0) {
+        Vertex *q = p->left;
+        p->left = q->right;
+        q->right = p;
+        p = q;
+        p->balance = 1;
+        VR = 0;
+        HR = 1;
+      } else {
+        p->balance = 0;
+        VR = 1;
+        HR = 0;
+      }
+    } else
+      HR = 0;
+  } else if (p->data < D) {
+    B2_insert(D, p->right);
+    if (VR == 1) {
+      p->balance = 1;
+      HR = 1;
+      VR = 0;
+    } else if (HR == 1) {
+      if (p->balance == 1) {
+        Vertex *q = p->right;
+        p->right = q->left;
+        p->balance = 0;
+        q->balance = 0;
+        q->left = p;
+        p = q;
+        VR = 1;
+        HR = 0;
+      } else
+        HR = 0;
+    }
+  }
 }

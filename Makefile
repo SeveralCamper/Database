@@ -24,7 +24,7 @@ obj/src/%.o: src/lib/%.cpp
 	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@  -I src/lib 
 
 obj/src/%.o: src/DataBase/%.cpp
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -c  -DAVL_DEL_M $< -o $@  -Isrc/lib  
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -c  -DB2_INSERT_M $< -o $@  -Isrc/lib  
 
 run: $(TARGET)
 	./bin/DataBase

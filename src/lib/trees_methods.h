@@ -40,6 +40,8 @@ void RR_1 (Vertex *&p);
 void del(Vertex*& ql, Vertex*& q);
 void delete_from_AVL(Vertex*& p, int key);
 
+void B2_insert(int D, Vertex *&p);
+
 Vertex *ISDP(int L, int R, int mas[]);
 
 #endif //  TREES_METHODS_PBST_H_
