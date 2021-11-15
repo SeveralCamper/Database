@@ -230,21 +230,21 @@ int main() {
   
   srand(time(NULL));
 
-  Vertex *dopTree = nullptr;
+  Vertex *DOP_Tree = nullptr;
   for (int i = 0; i <= n; i++) {
     V[i] = rand() % (n * 1000);
     W[i] = rand() % (n / 4);
   };
 
   calculate_matrixes();
-  create_tree(0, n, dopTree);
+  create_tree(0, n, DOP_Tree);
   std::cout << "|";
-  print_from_left_to_right(dopTree);
+  print_from_left_to_right(DOP_Tree);
   
   std::cout << "\n\n\n\n";
   
   std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
-  std::cout << "|DOP  |   " << size(dopTree) << "   |    " << control_sum(dopTree) << "    |     " << height(dopTree) << "    |      " << average_height(dopTree) << "     |\n";
+  std::cout << "|DOP  |   " << size(DOP_Tree) << "   |    " << control_sum(DOP_Tree) << "    |     " << height(DOP_Tree) << "    |      " << average_height(DOP_Tree) << "     |\n";
   
   #endif
 }
