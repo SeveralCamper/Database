@@ -16,7 +16,6 @@ int V[n];
 
 void calculate_AW();
 void calculate_AP_AR();
-void calculate_matrixes();
 void add_to_DOP(int D, int W, Vertex *&p);
 void create_tree(int L, int R, Vertex *&root);
 
@@ -236,7 +235,8 @@ int main() {
     W[i] = rand() % (n / 4);
   };
 
-  calculate_matrixes();
+  calculate_AW();
+  calculate_AP_AR();
   create_tree(0, n, DOP_Tree);
   std::cout << "|";
   print_from_left_to_right(DOP_Tree);
@@ -279,12 +279,7 @@ int main() {
       }
     }
   }
-
-  void calculate_matrixes() {
-    calculate_AW();
-    calculate_AP_AR();
-  }
-
+  
   void add_to_DOP(int D, int W, Vertex *&p) {
     if (!p) {
       p = new Vertex;
