@@ -410,3 +410,4 @@ void B2_insert(int D, Vertex *&p) {
     }
   }
 }
+

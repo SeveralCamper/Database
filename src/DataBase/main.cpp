@@ -7,6 +7,19 @@
 #endif
 #include "../lib/trees_methods.h"
 
+const int n = 100;
+int AW[n][n];
+int AP[n][n];
+int AR[n][n];
+int W[n];
+int V[n];
+
+void calculate_AW();
+void calculate_AP_AR();
+void calculate_matrixes();
+void add_to_DOP(int D, int W, Vertex *&p);
+void create_tree(int L, int R, Vertex *&root);
+
 int main() {
   #ifdef LIST_M
   List lst;
@@ -192,22 +205,104 @@ int main() {
     }
     #endif
 
-    #ifdef B2_INSERT_M
+  #ifdef DBD_M
 
   srand(time(NULL));
   Vertex *rootAVL = nullptr;
-  Vertex *rootBDB = nullptr;
+  Vertex *rootDBD = nullptr;
   for (int i = 0; i < 100; i++) {
     int value = rand() % 1000000;
     AVL(rootAVL, value);
-    B2_insert(value, rootBDB);
+    B2_insert(value, rootDBD);
   }
   std::cout << "|";
-  print_from_left_to_right(rootBDB);
-  std::cout << "\n\n\n\n\n\n\n";
-std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
-  std::cout << "|AVL  |   " << size(rootAVL) << "   |    " << control_sum(rootAVL) << "   |     " << height(rootAVL) << "     |       " << average_height(rootAVL) << "    |\n";
-  std::cout << "|DBD  |   " << size(rootBDB) << "   |    " << control_sum(rootBDB) << "   |     " << height(rootBDB) << "     |       " << average_height(rootBDB) << "    |\n";
+  print_from_left_to_right(rootDBD);
 
-    #endif
+  std::cout << "\n\n\n\n";
+
+  std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
+  std::cout << "|AVL  |   " << size(rootAVL) << "   |    " << control_sum(rootAVL) << "   |     " << height(rootAVL) << "     |       " << average_height(rootAVL) << "    |\n";
+  std::cout << "|DBD  |   " << size(rootDBD) << "   |    " << control_sum(rootDBD) << "   |     " << height(rootDBD) << "     |       " << average_height(rootDBD) << "    |\n";
+
+  #endif
+
+  #ifdef DOP_M
+  
+  srand(time(NULL));
+
+  Vertex *dopTree = nullptr;
+  for (int i = 0; i <= n; i++) {
+    V[i] = rand() % (n * 1000);
+    W[i] = rand() % (n / 4);
+  };
+
+  calculate_matrixes();
+  create_tree(0, n, dopTree);
+  std::cout << "|";
+  print_from_left_to_right(dopTree);
+  
+  std::cout << "\n\n\n\n";
+  
+  std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
+  std::cout << "|DOP  |   " << size(dopTree) << "   |    " << control_sum(dopTree) << "    |     " << height(dopTree) << "    |      " << average_height(dopTree) << "     |\n";
+  
+  #endif
 }
+
+  void calculate_AW() {
+    for (int i = 0; i <= n; i++)
+      for (int j = i + 1; j <= n; j++)
+        AW[i][j] = AW[i][j - 1] + W[j];
+  }
+
+  void calculate_AP_AR() {
+    int i, j, m, min, k, h;
+    for (i = 0; i <= n - 1; i++) {
+      j = i + 1;
+      AP[i][j] = AW[i][j];
+      AR[i][j] = j;
+    }
+    for (h = 2; h <= n; h++) {
+      for (i = 0; i <= n - h; i++) {
+        j = i + h;
+        m = AR[i][j - 1];
+        min = AP[i][m - 1] + AP[m][j];
+        for (k = m + 1; k <= AR[i + 1][j]; k++) {
+          int x = AP[i][k - 1] + AP[k][j];
+          if (x < min) {
+            m = k;
+            min = x;
+          }
+        }
+        AP[i][j] = min + AW[i][j];
+        AR[i][j] = m;
+      }
+    }
+  }
+
+  void calculate_matrixes() {
+    calculate_AW();
+    calculate_AP_AR();
+  }
+
+  void add_to_DOP(int D, int W, Vertex *&p) {
+    if (!p) {
+      p = new Vertex;
+      p->data = D;
+      p->W = W;
+      p->left = nullptr;
+      p->right = nullptr;
+    } else if (D < p->data)
+      add_to_DOP(D, W, p->left);
+    else if (D > p->data)
+      add_to_DOP(D, W, p->right);
+  }
+
+  void create_tree(int L, int R, Vertex *&root) {
+    if (L < R) {
+      int k = AR[L][R];
+      add_to_DOP(V[k], W[k], root);
+      create_tree(L, k - 1, root);
+      create_tree(k, R, root);
+    }
+  }

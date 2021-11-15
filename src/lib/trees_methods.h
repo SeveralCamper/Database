@@ -7,10 +7,13 @@
 
 struct Vertex {
   int data;
+  int W = 0;
   int balance = 0;
   Vertex *left = nullptr;
   Vertex *right = nullptr;
 };
+
+Vertex *ISDP(int L, int R, int mas[]);
 
 int size(Vertex *p);
 int height(Vertex *p);
@@ -41,7 +44,5 @@ void del(Vertex*& ql, Vertex*& q);
 void delete_from_AVL(Vertex*& p, int key);
 
 void B2_insert(int D, Vertex *&p);
-
-Vertex *ISDP(int L, int R, int mas[]);
 
 #endif //  TREES_METHODS_PBST_H_
