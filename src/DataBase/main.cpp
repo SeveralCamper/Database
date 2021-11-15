@@ -251,7 +251,7 @@ int main() {
 
   void calculate_AW() {
     for (int i = 0; i <= n; i++)
-      for (int j = i + 1; j <= n; j++)
+      for (int j = i + 1; j <= n; j++) 
         AW[i][j] = AW[i][j - 1] + W[j];
   }
 
