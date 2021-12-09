@@ -45,4 +45,7 @@ void delete_from_AVL(Vertex*& p, int key);
 
 void B2_insert(int D, Vertex *&p);
 
+void A1(Vertex *&root, int *V1, int *W1, int n);
+void A2(Vertex *&root, int *V2, int *W2, int L, int R);
+
 #endif //  TREES_METHODS_PBST_H_

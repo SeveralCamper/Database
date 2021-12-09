@@ -102,19 +102,17 @@ void add_to_SDP(int D, Vertex *&root) {
     }
 }
 
-void add_to_SDP_rec(int D, Vertex *&p) {
-    if(!p){
-        p = new Vertex;
-        p->data = D;
-        p->left = nullptr;
-        p->right = nullptr;
-    } else if (D < p->data) {
-        add_to_SDP_rec(D, p->left);
-    } else if (D > p->data) {
-        add_to_SDP_rec(D, p->right);
-    } else {
-        return;
-    }
+void add_to_SDP_rec(int D, int W, Vertex *&p) {
+  if (!p) {
+    p = new Vertex;
+    p->data = D;
+    p->W = W;
+    p->left = nullptr;
+    p->right = nullptr;
+  } else if (D < p->data)
+    add_to_SDP_rec(D, W, p->left);
+  else if (D > p->data)
+    add_to_SDP_rec(D, W, p->right);
 }
 
 void del(Vertex*& ql, Vertex*& q) {
@@ -411,3 +409,33 @@ void B2_insert(int D, Vertex *&p) {
   }
 }
 
+void A1(Vertex *&root, int *V1, int *W1, int n) {
+  for (int i = 0; i < n - 1; i++)
+    for (int j = 0; j < n - i - 1; j++)
+      if (W1[j] > W1[j + 1]) {
+        std::swap(W1[j], W1[j + 1]);
+        std::swap(V1[j], V1[j + 1]);
+      }
+  for (int i = 0; i < n; i++) {
+    add_to_SDP_rec(V1[i], W1[i], root);
+  }
+}
+
+void A2(Vertex *&root, int *V2, int *W2, int L, int R) {
+  int weight = 0;
+  int sum = 0;
+  int i;
+  if (L <= R) {
+    for (i = L; i < R; i++) {
+      weight += W2[i];
+    }
+    for (i = L; i < R; i++) {
+      if ((sum < weight / 2) && (weight + W2[i] > weight / 2))
+        break;
+      sum += W2[i];
+    }
+    add_to_SDP_rec(V2[i], W2[i], root);
+    A2(root, V2, W2, L, i - 1);
+    A2(root, V2, W2, i + 1, R);
+  }
+}

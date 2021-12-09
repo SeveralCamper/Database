@@ -247,6 +247,36 @@ int main() {
   std::cout << "|DOP  |   " << size(DOP_Tree) << "   |    " << control_sum(DOP_Tree) << "    |     " << height(DOP_Tree) << "    |      " << average_height(DOP_Tree) << "     |\n";
   
   #endif
+
+  #ifdef A1_A2_M
+  srand(time(NULL));
+  int len = 100;
+  int V_A1_A2[len], W_A1_A2[len], V1_A1_A2[len], W1_A1_A2[len];
+  Vertex *A1tree = nullptr;
+  Vertex *A2tree = nullptr;
+  int V_values;
+	int W_valuse;
+  for (int i = 0; i < len; i++) {
+    V_values = rand() % (len * 1000);
+    W_valuse =  rand() % (len / 4);
+    V1_A1_A2[i] = V_values;  V_A1_A2[i]  = V_values;
+    W1_A1_A2[i] = W_valuse;  W_A1_A2[i]  = W_valuse;
+  };
+
+  A1(A1tree, V_A1_A2, W_A1_A2, len);
+  A2(A2tree, V1_A1_A2, W1_A1_A2, 0, len-1);
+
+	print_from_left_to_right(A1tree);
+ std::cout << "\n\n\n\n";
+
+ print_from_left_to_right(A2tree);
+ std::cout << "\n\n\n\n";
+	
+  std::cout << "|     |   Size  |   ControlSum  |  Height   |  AverageHeight|\n";
+  std::cout << "|A1   |   " << size(A1tree) << "   |    " << control_sum(A1tree) << "    |     " << height(A1tree) << "    |      " << average_height(A1tree) << "     |\n";
+  std::cout << "|A2   |   " << size(A2tree) << "   |    " << control_sum(A2tree) << "    |     " << height(A2tree) << "    |      " << average_height(A2tree) << "     |\n";
+
+  #endif
 }
 
   void calculate_AW() {
