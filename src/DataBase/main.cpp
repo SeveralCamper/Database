@@ -8,7 +8,7 @@
 #include "../lib/trees_methods.h"
 
 const int n = 100;
-int AW[n][n];
+int AW[n][n]; //
 int AP[n][n];
 int AR[n][n];
 int W[n];
