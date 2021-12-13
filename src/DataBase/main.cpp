@@ -6,9 +6,12 @@
 #include "../lib/hash_methods.h"
 #endif
 #include "../lib/trees_methods.h"
+#ifdef CODE_M
+#include "../lib/code_methods.h"
+#endif
 
 const int n = 100;
-int AW[n][n]; //
+int AW[n][n];
 int AP[n][n];
 int AR[n][n];
 int W[n];
@@ -276,6 +279,160 @@ int main() {
   std::cout << "|A1   |   " << size(A1tree) << "   |    " << control_sum(A1tree) << "    |     " << height(A1tree) << "    |      " << average_height(A1tree) << "     |\n";
   std::cout << "|A2   |   " << size(A2tree) << "   |    " << control_sum(A2tree) << "    |     " << height(A2tree) << "    |      " << average_height(A2tree) << "     |\n";
 
+  #endif
+
+  #ifdef CODE_M
+	double entropy;
+	double average_Shannon, average_Fano, average_Gilbert, average_Haffman;
+  int file_size;
+  std::unordered_map<char, int> counter_map;
+
+  std::cout << "Entropy table of symbols" << std::endl;
+
+  try {
+      counter_map = get_char_counts_from_file("misc/file.txt", file_size);
+  } catch (std::runtime_error &exc) {
+      std::cout << exc.what();
+      return 1;
+  }
+  auto probabilities = calc_probabilities(counter_map, file_size);
+  counter_map.clear();
+
+  std::sort(probabilities.begin(), probabilities.end(), std::greater<std::pair<double, char>>());
+  for (auto i : probabilities) {
+      std::cout << std::fixed << i.first << " | " << i.second << '\n';
+  }
+
+  const int n = (int) probabilities.size();
+
+  auto c = new char[n][20];
+  auto Length = new int[n];
+  auto p = new double[n];
+  for (int i = 0; i < n; ++i) {
+      p[i] = probabilities[i].first;
+  entropy += p[i] * log2(p[i]);
+  }
+  double chance_l[n];
+
+  char encMode = 0;
+  while (encMode != '0') {
+    std::cout << "\n";
+    std::cout << "Enter Encoding Mode" << std::endl;
+    std::cout << "\n";
+    std::cout << "1 - Shannon Code" << std::endl;
+    std::cout << "2 - Gilbert-Mur Code" << std::endl;
+    std::cout << "3 - Fano Code" << std::endl;
+    std::cout << "4 - Haffman Code" << std::endl;
+    std::cout << "5 - Average Length Table" << std::endl;
+    std::cout << "0 - Exit" << std::endl;
+    std::cin >> encMode;
+      switch (encMode) {
+        case '0':
+          break;
+        case '1': {
+          shannon_code(n, p, Length, c);
+          std::cout << "\nShannon Code:\n";
+          std::cout << "\nQ Length Code\n";
+          for (int i = 0; i < n; i++) {
+              printf("%c | %.5lf %d ", probabilities[i].second, p[i], Length[i]);
+          average_Shannon += p[i] * Length[i];
+              for (int j = 0; j < Length[i]; ++j) {
+                  printf("%c", c[i][j]);
+              }
+              std::cout << '\n';
+          }
+          break;
+        }
+        case '2': {
+          gilbert_mur_code(n, p, Length, c);
+          std::cout << "\nGilbert-Mur Code:\n";
+          std::cout << "\nQ Length Code\n";
+          for (int i = 0; i < n; i++) {
+              printf("%c | %.5lf %d ", probabilities[i].second, p[i], Length[i]);
+          average_Gilbert += p[i] * Length[i];
+              for (int j = 0; j < Length[i]; ++j) {
+                  printf("%c", c[i][j]);
+              }
+              std::cout << '\n'; 
+          }
+          break;
+        }
+        case '3': {
+          for (int i = 0; i < n; ++i) {
+              Length[i] = 0;
+          }
+          fano_code(0, n - 1, -1, p, Length, c);
+          std::cout << "\nFano Code:\n";
+          std::cout << "\nQ Length Code\n";
+          for (int i = 0; i < n; i++) {
+              printf("%c | %.5lf %d ", probabilities[i].second, p[i], Length[i]);
+          average_Fano += p[i] * Length[i];
+              for (int j = 0; j < Length[i]; ++j) {
+                  printf("%c", c[i][j]);
+              }
+              std::cout << '\n';
+          }
+          break;
+        }
+        case '4': {
+          for (int i = 0; i < n; ++i) {
+              Length[i] = 0;
+              chance_l[i] = p[i];
+          }
+          huffman_code(n, chance_l, Length, c, p);
+          std::cout << "\nHaffman Code:\n";
+          std::cout << "\nQ Length Code\n";
+          for (int i = 0; i < n; i++) {
+              printf("%c | %.5lf %d ", probabilities[i].second, p[i], Length[i]);
+          average_Haffman += p[i] * Length[i];
+              for (int j = 0; j < Length[i]; ++j) {
+                  printf("%c", c[i][j]);
+              }
+              std::cout << '\n';
+          }
+          break;
+        }
+        case '5': {
+          shannon_code(n, p, Length, c);
+          for (int i = 0; i < n; i++) {
+          average_Shannon += p[i] * Length[i];
+          }
+
+          gilbert_mur_code(n, p, Length, c);
+          for (int i = 0; i < n; i++) {
+          average_Gilbert += p[i] * Length[i];
+          }
+
+          for (int i = 0; i < n; ++i) {
+              Length[i] = 0;
+          }
+          fano_code(0, n - 1, -1, p, Length, c);
+          for (int i = 0; i < n; i++) {
+          average_Fano += p[i] * Length[i];
+          }
+
+          for (int i = 0; i < n; ++i) {
+              Length[i] = 0;
+              chance_l[i] = p[i];
+          }
+          huffman_code(n, chance_l, Length, c, p);
+          for (int i = 0; i < n; i++) {
+          average_Haffman += p[i] * Length[i];
+          }
+
+        	std::cout << "\n\nEntropy = " << -entropy << std::endl;
+          std::cout << "Haffman Average Length = " << average_Haffman  << std::endl;
+          std::cout << "Fano Average Length = " << average_Fano << std::endl;
+          std::cout << "Shannon Average Length = " << average_Shannon  << std::endl;
+          std::cout << "Gilbert Moore AverageLength = " << average_Gilbert << std::endl;
+          break;
+        }
+        default: {
+          break;
+        }
+    }
+  }
+  delete[] p;
   #endif
 }
 
