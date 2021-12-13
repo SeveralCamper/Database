@@ -341,6 +341,7 @@ int main() {
               }
               std::cout << '\n';
           }
+          average_Shannon = average_Fano = average_Haffman = average_Gilbert = 0;
           break;
         }
         case '2': {
@@ -355,6 +356,7 @@ int main() {
               }
               std::cout << '\n'; 
           }
+          average_Shannon = average_Fano = average_Haffman = average_Gilbert = 0;
           break;
         }
         case '3': {
@@ -372,6 +374,7 @@ int main() {
               }
               std::cout << '\n';
           }
+          average_Shannon = average_Fano = average_Haffman = average_Gilbert = 0;
           break;
         }
         case '4': {
@@ -390,6 +393,7 @@ int main() {
               }
               std::cout << '\n';
           }
+          average_Shannon = average_Fano = average_Haffman = average_Gilbert = 0;
           break;
         }
         case '5': {
@@ -425,6 +429,7 @@ int main() {
           std::cout << "Fano Average Length = " << average_Fano << std::endl;
           std::cout << "Shannon Average Length = " << average_Shannon  << std::endl;
           std::cout << "Gilbert Moore AverageLength = " << average_Gilbert << std::endl;
+          average_Shannon = average_Fano = average_Haffman = average_Gilbert = 0;
           break;
         }
         default: {
