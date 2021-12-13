@@ -24,7 +24,7 @@ obj/src/%.o: src/lib/%.cpp
 	$(CXX) $(CPPFLAGS) $(CFLAGS) -c $< -o $@  -I src/lib 
 
 obj/src/%.o: src/DataBase/%.cpp
-	$(CXX) $(CPPFLAGS) $(CFLAGS) -c  -DA1_A2_M $< -o $@  -Isrc/lib  
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -c  -DCODE_M $< -o $@  -Isrc/lib  
 
 run: $(TARGET)
 	./bin/DataBase
